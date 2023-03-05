@@ -1,0 +1,64 @@
+version: "3"
+
+services:
+  server:
+    build:
+      context: server/.
+      dockerfile: ./docker/Dockerfile
+    container_name: server
+    working_dir: /var/www/html
+    ports:
+      - "8080:80"
+    volumes:
+        - ./server:/var/www/html
+        - ./docker/nginx_log:/var/log/nginx
+        - ./docker/php-fpm/php-fpm.log:/var/log/php-fpm.log
+        - ./docker/config/app.conf:/etc/nginx/conf.d/app.conf
+    links: 
+        - mysql
+    networks:
+      - sample
+
+  mysql:
+    image: mysql:5.6
+    container_name: mysql
+    volumes:
+      - ./.docker/data/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - sample
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+    depends_on:
+      - mysql
+    ports:
+      - 4040:80
+    volumes:
+      - ./.docker/data/phpmyadmin/sessions:/sessions
+    networks:
+      - sample
+  
+  client:
+    container_name: client_admin
+    image: node:lts
+    working_dir: /var/www/html/app/
+    entrypoint: /bin/bash
+    expose:
+      - 3000:3000
+    volumes:
+      - ./client_admin/:/var/www/html/app
+    tty: true
+    networks:
+      - sample
+networks:
+    sample:
+      driver: bridge
+  
+    

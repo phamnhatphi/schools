@@ -1,0 +1,47 @@
+.v-messages__message {
+    white-space: pre-line;
+}
+
+.v-alert__content {
+    white-space: pre-line;
+    .v-alert-message:not(:last-child) {
+        margin-bottom: 0.2em;
+    }
+}
+
+.v-alert__close {
+    margin-inline-start: 0 !important;
+}
+
+.data-table td,
+.data-table th {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 15em;
+    word-break: keep-all;
+}
+
+.v-checkbox {
+    min-height: auto;
+}
+
+.wrap-text {
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+@keyframes glowing {
+    0% {
+        background-color: #F8BBD0;
+    }
+    50% {
+        background-color: #F06292;
+    }
+    100% {
+        background-color: #eb98b5;
+    }
+}
+.glowing {
+    animation: glowing 1000ms infinite;
+}
