@@ -1,0 +1,10 @@
+{
+  // https://nuxt.com/docs/guide/concepts/typescript
+  "references": [
+    {"path": "./client_admin"}
+  ],
+  "exclude": [
+    "./dist",
+    "./venv"
+  ]
+}
